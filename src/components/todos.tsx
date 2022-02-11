@@ -3,31 +3,40 @@ import React, { useState } from 'react';
 export interface ITodosProps {
 }
 
-function Todo({ value }: { value: string }) {
+interface TodoInt {
+    id: number,
+    content: string,
+    done: boolean
+}
+
+function Todo({ value }: { value: TodoInt }) {
     return (
         <ul>
             <li>
-                {value}
+                {value.content}
             </li>
         </ul>
     )
 }
 
 export function Todos(props: ITodosProps) {
-    const [createTodo, setCreateTodo] = useState<string[]>([])
-    const [todo, setTodo] = useState('')
+    const [createTodo, setCreateTodo] = useState<TodoInt[]>([])
+    const [todo, setTodo] = useState<TodoInt>({ id: 1, content: '', done: false })
+    const [todoId, setTodoId] = useState(1);
 
-    const handleSubmit = (evt: React.FormEvent, value: string) => {
+    const handleSubmit = (evt: React.FormEvent, value: TodoInt) => {
         evt.preventDefault()
-        setTodo('')
-        if (todo.length) {
+        // Increment the todoId so that we don't have two similar ids.
+        setTodoId(todoId + 1)
+        setTodo({ id: 0, content: '', done: false })
+        if (todo?.content.length) {
             setCreateTodo([...createTodo, value])
         }
     }
     return (
         <div className='col-6 mt-5 mx-auto'>
             <form onSubmit={(e) => handleSubmit(e, todo)}>
-                <input type="text" value={todo} onChange={(e) => setTodo(e.target.value)} />
+                <input type="text" value={todo?.content} onChange={(e) => setTodo({ id: todoId, content: e.target.value, done: false })} />
                 <button type='submit' className='btn btn-primary'>Submit</button>
             </form>
             {createTodo.length ? createTodo.map((todo, index) => (
