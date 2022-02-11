@@ -9,11 +9,13 @@ interface TodoInt {
     done: boolean
 }
 
-function Todo({ value }: { value: TodoInt }) {
+function Todo({ value, handleDelete }: { value: TodoInt, handleDelete: Function }) {
+
     return (
         <ul>
             <li>
-                {value.content}
+                <span className='me-2'>{value.content}</span>
+                <button type='button' className='btn btn-danger rounded-circle' onClick={(e) => handleDelete(e, value.id)}>x</button>
             </li>
         </ul>
     )
@@ -33,6 +35,12 @@ export function Todos(props: ITodosProps) {
             setCreateTodo([...createTodo, value])
         }
     }
+
+    const handleDelete = (evt: React.MouseEvent, value: number) => {
+        evt.preventDefault()
+        const newTodos = createTodo.filter(todo => todo.id !== value)
+        setCreateTodo(newTodos)
+    }
     return (
         <div className='col-6 mt-5 mx-auto'>
             <form onSubmit={(e) => handleSubmit(e, todo)}>
@@ -40,7 +48,7 @@ export function Todos(props: ITodosProps) {
                 <button type='submit' className='btn btn-primary'>Submit</button>
             </form>
             {createTodo.length ? createTodo.map((todo, index) => (
-                <Todo value={todo} key={index} />
+                <Todo value={todo} key={index} handleDelete={handleDelete} />
             )) : null}
         </div>
     );
