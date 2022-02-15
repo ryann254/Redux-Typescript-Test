@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TodoInt } from "../components/todos";
-import type { RootState } from "./store";
 
 interface todosInitialState {
     value: TodoInt[]
@@ -16,10 +15,13 @@ export const todosSlice = createSlice({
     reducers: {
         addTodo: (state, action: PayloadAction<TodoInt>) => {
             state.value.push(action.payload)
+        },
+        deleteTodo: (state, action: PayloadAction<number>) => {
+            state.value = state.value.filter(todo => todo.id !== action.payload)
         }
     }
 })
 
-export const { addTodo } = todosSlice.actions
+export const { addTodo, deleteTodo } = todosSlice.actions
 
 export default todosSlice.reducer

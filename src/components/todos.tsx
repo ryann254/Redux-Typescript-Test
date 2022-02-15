@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
-import { addTodo } from '../redux/todosReducer';
+import { addTodo, deleteTodo } from '../redux/todosReducer';
 
 export interface ITodosProps {
 }
@@ -35,30 +35,18 @@ export function Todos(props: ITodosProps) {
     const [todoId, setTodoId] = useState(1);
     const [update, setUpdate] = useState<UpdateInt>({ isUpdate: false, id: 0 });
     const storedTodos = useAppSelector((state) => state.todos.value)
-    const createTodo = useAppDispatch()
+    const dispatch = useAppDispatch()
 
     const handleSubmit = (evt: React.FormEvent, value: TodoInt, update: UpdateInt) => {
         evt.preventDefault()
-        createTodo(addTodo(value))
-        // if (update.isUpdate) {
-        //     const updatedTodo = createTodo.find(todo => todo.id === update.id)
-
-        //     if (updatedTodo) {
-        //         updatedTodo.content = value.content
-        //     }
-        //     setUpdate({ isUpdate: false, id: 0 })
-        // } else {
-        //     // Increment the todoId so that we don't have two similar ids.
-        //     setTodoId(todoId + 1)
-        //     if (todo?.content.length) {
-        //         setCreateTodo([...createTodo, value])
-        //     }
-        // }
+        dispatch(addTodo(value))
+        setTodoId(todoId + 1)
         setTodo({ id: 0, content: '', done: false })
     }
 
     const handleDelete = (evt: React.MouseEvent, value: number) => {
         evt.preventDefault()
+        dispatch(deleteTodo(value))
         // const newTodos = createTodo.filter(todo => todo.id !== value)
         // setCreateTodo(newTodos)
     }
