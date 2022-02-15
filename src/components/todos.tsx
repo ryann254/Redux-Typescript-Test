@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 export interface ITodosProps {
 }
 
-interface TodoInt {
+export interface TodoInt {
     id: number,
     content: string,
     done: boolean
