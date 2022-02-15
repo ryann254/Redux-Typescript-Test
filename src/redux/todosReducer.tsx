@@ -22,6 +22,4 @@ export const todosSlice = createSlice({
 
 export const { addTodo } = todosSlice.actions
 
-export const storedTodos = (state: RootState) => state.todos
-
 export default todosSlice.reducer
