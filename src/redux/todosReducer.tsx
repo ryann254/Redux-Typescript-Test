@@ -18,7 +18,11 @@ export const todosSlice = createSlice({
         },
         updateTodo: (state, action: PayloadAction<TodoInt>) => {
             state.value = state.value.filter((item) => item.id !== action.payload.id)
-            // Try updated items to the top
+            // Try adding updated items to the top or bottom.
+            state.value.unshift(action.payload)
+        },
+        completeTodo: (state, action: PayloadAction<TodoInt>) => {
+            state.value = state.value.filter((item) => item.id !== action.payload.id)
             state.value.push(action.payload)
         },
         deleteTodo: (state, action: PayloadAction<number>) => {
@@ -27,6 +31,6 @@ export const todosSlice = createSlice({
     }
 })
 
-export const { addTodo, updateTodo, deleteTodo } = todosSlice.actions
+export const { addTodo, updateTodo, completeTodo, deleteTodo } = todosSlice.actions
 
 export default todosSlice.reducer

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
-import { addTodo, deleteTodo, updateTodo } from '../redux/todosReducer';
+import { addTodo, completeTodo, deleteTodo, updateTodo } from '../redux/todosReducer';
 
 export interface ITodosProps {
 }
@@ -16,12 +16,13 @@ interface UpdateInt {
     id: number
 }
 
-function Todo({ value, handleDelete, handleUpdate }: { value: TodoInt, handleDelete: Function, handleUpdate: Function }) {
+function Todo({ value, handleDelete, handleUpdate, handleComplete }: { value: TodoInt, handleDelete: Function, handleUpdate: Function, handleComplete: Function }) {
 
     return (
         <ul className='mt-3'>
             <li>
                 <span className='me-2'>{value.content}</span>
+                {value.done ? null : <button type='button' className='btn btn-outline-primary me-2' onClick={(e) => handleComplete(e, value)}>Done</button>}
                 <button type='button' className='btn btn-outline-warning me-2' onClick={(e) => handleUpdate(e, value)}>Update</button>
                 <button type='button' className='btn btn-danger rounded-circle' onClick={(e) => handleDelete(e, value.id)}>x</button>
             </li>
@@ -65,6 +66,16 @@ export function Todos(props: ITodosProps) {
         setTodo(value)
         // Then update it in the todos.
     }
+
+    const handleComplete = (evt: React.MouseEvent, value: TodoInt) => {
+        evt.preventDefault()
+        console.log('here');
+        let completedTodo = {
+            ...value,
+            done: true
+        }
+        dispatch(completeTodo(completedTodo))
+    }
     return (
         <div className='col-6 mt-5 mx-auto'>
             <form onSubmit={(e) => handleSubmit(e, todo, update)}>
@@ -72,7 +83,7 @@ export function Todos(props: ITodosProps) {
                 <button type='submit' className='btn btn-primary'>Submit</button>
             </form>
             {storedTodos.length ? storedTodos.map((todo, index) => (
-                <Todo value={todo} key={index} handleDelete={handleDelete} handleUpdate={handleUpdate} />
+                <Todo value={todo} key={index} handleDelete={handleDelete} handleUpdate={handleUpdate} handleComplete={handleComplete} />
             )) : null}
         </div>
     );
