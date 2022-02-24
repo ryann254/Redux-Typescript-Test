@@ -3,7 +3,7 @@ import { getTodos, incomingTodos } from '../network/network'
 
 
 function Todo({ key, value }: { key: number, value: incomingTodos }) {
-
+    useEffect(() => { }, [])
     return (
         <ul className='mt-3'>
             <li>
