@@ -3,7 +3,13 @@ import { getTodos, incomingTodos } from '../network/network'
 
 
 function Todo({ key, value }: { key: number, value: incomingTodos }) {
-    useEffect(() => { }, [])
+    useEffect(() => {
+        division(2, 4);
+     }, [])
+     
+     const division = (a: number, b:number) => {
+        return a * b
+    }
     return (
         <ul className='mt-3'>
             <li>
