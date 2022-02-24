@@ -14,16 +14,16 @@ function Todo({ key, value }: { key: number, value: incomingTodos }) {
     )
 }
 
-// export function incomingTodos() {
-//     const [networkTodos, setNetworkTodos] = useState<incomingTodos[]>([])
-//     useEffect(() => {
-//         if (!networkTodos.length) {
-//             getTodos().then(res => setNetworkTodos(res))
-//         }
-//     }, [networkTodos])
-//     return (
-//         <div>{networkTodos.length ? networkTodos.map((todo, index) => (
-//             <Todo key={index} todo={todo} />
-//         )) : null}</div>
-//     )
-// }
+export function incomingTodos() {
+    const [networkTodos, setNetworkTodos] = useState<incomingTodos[]>([])
+    useEffect(() => {
+        if (!networkTodos.length) {
+            getTodos().then(res => setNetworkTodos(res))
+        }
+    }, [networkTodos])
+    return (
+        <div>{networkTodos.length ? networkTodos.map((todo, index) => (
+            <Todo key={index} todo={todo} />
+        )) : null}</div>
+    )
+}
