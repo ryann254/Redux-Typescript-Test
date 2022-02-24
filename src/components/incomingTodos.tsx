@@ -6,6 +6,7 @@ function Todo({ key, value }: { key: number, value: incomingTodos }) {
     useEffect(() => {
         division(2, 4);
      }, [])
+     
      const division = (a: number, b:number) => {
         return a * b
     }
