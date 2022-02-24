@@ -4,10 +4,15 @@ import { getTodos, incomingTodos } from '../network/network'
 
 function Todo({ key, value }: { key: number, value: incomingTodos }) {
     useEffect(() => {
+        multiply(3, 3)
         division(2, 4);
-     }, [])
-     
-     const division = (a: number, b:number) => {
+
+    }, [])
+    const multiply = (a: number, b: number) => {
+        return a * b
+    }
+
+    const division = (a: number, b: number) => {
         return a * b
     }
     return (
