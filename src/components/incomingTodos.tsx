@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getTodos, incomingTodos } from '../network/network'
 
 
-function Todo({ key, value }: { key: number, value: incomingTodos }) {
+function Todo({ todo }: { todo: incomingTodos }) {
     useEffect(() => {
         multiply(3, 3)
         division(2, 4);
@@ -18,14 +18,14 @@ function Todo({ key, value }: { key: number, value: incomingTodos }) {
     return (
         <ul className='mt-3'>
             <li>
-                <span className='me-2'>{value.title}</span>
-                {value.completed ? null : <button type='button' className='btn btn-outline-primary me-2'>Done</button>}
+                <span className='me-2'>{todo.title}</span>
+                {todo.completed ? null : <button type='button' className='btn btn-outline-primary me-2'>Done</button>}
             </li>
         </ul>
     )
 }
 
-export function incomingTodos() {
+export function IncomingTodos() {
     const [networkTodos, setNetworkTodos] = useState<incomingTodos[]>([])
     useEffect(() => {
         if (!networkTodos.length) {
