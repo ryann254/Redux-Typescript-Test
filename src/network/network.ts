@@ -5,8 +5,29 @@ export interface incomingTodos {
     completed: boolean
 }
 
+export interface Payload {
+    userId: number,
+    title: string,
+    body: string
+}
+
+// Be mindful about the last slash.
+const url = 'https://jsonplaceholder.typicode.com/'
+
 export const getTodos = (): Promise<incomingTodos[]> => {
-    return fetch('https://jsonplaceholder.typicode.com/todos')
+    return fetch(`${url}todos`)
         .then(res => res.json())
         .then(res => res as incomingTodos[])
+}
+
+export const postTodos = (payload: Payload): Promise<incomingTodos> => {
+    return fetch(`${url}posts`, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        }
+    })
+        .then((res) => res.json())
+        .then(res => res as incomingTodos)
 }

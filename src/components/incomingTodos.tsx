@@ -1,20 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { getTodos, incomingTodos } from '../network/network'
+import { getTodos, incomingTodos, postTodos } from '../network/network'
 
 
 function Todo({ todo }: { todo: incomingTodos }) {
-    useEffect(() => {
-        multiply(3, 3)
-        division(2, 4);
-
-    }, [])
-    const multiply = (a: number, b: number) => {
-        return a * b
-    }
-
-    const division = (a: number, b: number) => {
-        return a * b
-    }
     return (
         <ul className='mt-3'>
             <li>
@@ -32,9 +20,26 @@ export function IncomingTodos() {
             getTodos().then(res => setNetworkTodos(res))
         }
     }, [networkTodos])
+
+    const postPayload = () => {
+        const payload = {
+            title: 'Demon Slayer',
+            body: 'Demon slayer is the best',
+            userId: 1
+        }
+        let result;
+        result = postTodos(payload).then(res => console.log(res))
+    }
+
     return (
-        <div>{networkTodos.length ? networkTodos.map((todo, index) => (
-            <Todo key={index} todo={todo} />
-        )) : null}</div>
+        <>
+            <div className="createPost">
+                <button className='btn btn-outline-success' onClick={postPayload}>Post</button>
+            </div>
+            <div>{networkTodos.length ? networkTodos.map((todo, index) => (
+                <Todo key={index} todo={todo} />
+            )) : null}
+            </div>
+        </>
     )
 }
