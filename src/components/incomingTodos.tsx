@@ -17,7 +17,8 @@ export function IncomingTodos() {
     const [networkTodos, setNetworkTodos] = useState<incomingTodos[]>([])
     useEffect(() => {
         if (!networkTodos.length) {
-            getTodos().then(res => setNetworkTodos(res))
+            const result = getTodos()
+            result.then(res => setNetworkTodos(res))
         }
     }, [networkTodos])
 
@@ -27,8 +28,8 @@ export function IncomingTodos() {
             body: 'Demon slayer is the best',
             userId: 1
         }
-        let result;
-        result = postTodos(payload).then(res => console.log(res))
+        const result = postTodos(payload)
+        result.then(res => console.log(res))
     }
 
     return (
