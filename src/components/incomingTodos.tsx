@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getTodos, incomingTodos, postTodos } from '../network/network'
+import { getTodos, incomingTodos, patchTodos, postTodos } from '../network/network'
 
 
 function Todo({ todo }: { todo: incomingTodos }) {
@@ -32,10 +32,17 @@ export function IncomingTodos() {
         result.then(res => console.log(res))
     }
 
+    const updatePayload = () => {
+        const result = patchTodos({ title: 'Jujutsu Kaisen' })
+        result.then(res => console.log(res))
+    }
+
     return (
         <>
             <div className="createPost">
-                <button className='btn btn-outline-success' onClick={postPayload}>Post</button>
+                <button className='btn me-3 btn-outline-success' onClick={postPayload}>Post Payload</button>
+                <button className='btn me-3 btn-warning' onClick={updatePayload}>Update Payload</button>
+                <button className='btn me-3 btn-danger' onClick={postPayload}>Post Payload</button>
             </div>
             <div>{networkTodos.length ? networkTodos.map((todo, index) => (
                 <Todo key={index} todo={todo} />
