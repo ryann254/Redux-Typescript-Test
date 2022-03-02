@@ -45,3 +45,10 @@ export const patchTodos = async (payload: UpdatePayload): Promise<incomingTodos>
     })
     return result.json()
 }
+
+export const deleteTodo = async (payload: number) => {
+    const result = await fetch(`${url}posts/${payload}`, {
+        method: "DELETE"
+    })
+    return result.json()
+}
