@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { getTodos, incomingTodos, patchTodos, postTodos, deleteTodo } from '../network/network'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
-import { addNetworkTodos } from '../redux/todosReducer'
+import { addNetworkTodos, createNetworkTodo } from '../redux/todosReducer'
 
 
 function Todo({ todo }: { todo: incomingTodos }) {
@@ -24,24 +24,24 @@ export function IncomingTodos() {
             const result = getTodos()
             result.then(res => dispatch(addNetworkTodos(res)))
         }
-    }, [storedTodos])
+    }, [storedTodos, dispatch])
 
-    const postPayload = () => {
+    const postPayload = (): void => {
         const payload = {
             title: 'Demon Slayer',
             body: 'Demon slayer is the best',
             userId: 1
         }
         const result = postTodos(payload)
-        result.then(res => console.log(res))
+        result.then(res => dispatch(createNetworkTodo(res)))
     }
 
-    const updatePayload = () => {
+    const updatePayload = (): void => {
         const result = patchTodos({ title: 'Jujutsu Kaisen' })
         result.then(res => console.log(res))
     }
 
-    const deletePayload = () => {
+    const deletePayload = (): void => {
         const result = deleteTodo(1)
         result.then(res => console.log(res))
     }

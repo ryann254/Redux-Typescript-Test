@@ -17,6 +17,9 @@ export const todosSlice = createSlice({
         addNetworkTodos: (state, action: PayloadAction<incomingTodos[]>) => {
             state.value = action.payload
         },
+        createNetworkTodo: (state, action: PayloadAction<incomingTodos>) => {
+            state.value.unshift(action.payload)
+        }
         // addTodo: (state, action: PayloadAction<TodoInt>) => {
         //     state.value.push(action.payload)
         // },
@@ -35,7 +38,7 @@ export const todosSlice = createSlice({
     }
 })
 
-export const { addNetworkTodos } = todosSlice.actions
+export const { addNetworkTodos, createNetworkTodo } = todosSlice.actions
 // export const { addTodo, updateTodo, completeTodo, deleteTodo } = todosSlice.actions
 
 export default todosSlice.reducer
