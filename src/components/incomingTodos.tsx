@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { getTodos, incomingTodos, patchTodos, postTodos, deleteTodo } from '../network/network'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
-import { addNetworkTodos, createNetworkTodo } from '../redux/todosReducer'
+import { addNetworkTodos, createNetworkTodo, updateNetworkTodo } from '../redux/todosReducer'
 
 
 function Todo({ todo }: { todo: incomingTodos }) {
@@ -38,7 +38,7 @@ export function IncomingTodos() {
 
     const updatePayload = (): void => {
         const result = patchTodos({ title: 'Jujutsu Kaisen' })
-        result.then(res => console.log(res))
+        result.then(res => dispatch(updateNetworkTodo(res)))
     }
 
     const deletePayload = (): void => {
