@@ -27,6 +27,24 @@ export const todosSlice = createSlice({
         },
         deleteNetworkTodo: (state, action: PayloadAction<number>) => {
             state.value = state.value.filter((item) => item.id !== action.payload)
+        },
+        sortByOddNumbers: (state) => {
+            state.value = state.value.filter((item) => item.id % 2 > 0)
+        },
+        sortByEvenNumbers: (state) => {
+            state.value = state.value.filter((item) => item.id % 2 === 0)
+        },
+        sortAlphabetically: (state) => {
+            state.value = state.value.sort(function (a, b) {
+                if (a.title < b.title) {
+                    return -1
+                }
+
+                if (a.title > b.title) {
+                    return 1
+                }
+                return 0
+            })
         }
         // addTodo: (state, action: PayloadAction<TodoInt>) => {
         //     state.value.push(action.payload)
@@ -46,7 +64,7 @@ export const todosSlice = createSlice({
     }
 })
 
-export const { addNetworkTodos, createNetworkTodo, updateNetworkTodo, deleteNetworkTodo } = todosSlice.actions
+export const { addNetworkTodos, createNetworkTodo, updateNetworkTodo, deleteNetworkTodo, sortByOddNumbers, sortByEvenNumbers, sortAlphabetically } = todosSlice.actions
 // export const { addTodo, updateTodo, completeTodo, deleteTodo } = todosSlice.actions
 
 export default todosSlice.reducer
