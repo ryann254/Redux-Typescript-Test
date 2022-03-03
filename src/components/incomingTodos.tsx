@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { getTodos, incomingTodos, patchTodos, postTodos, deleteTodo } from '../network/network'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
-import { addNetworkTodos, createNetworkTodo, updateNetworkTodo } from '../redux/todosReducer'
+import { addNetworkTodos, createNetworkTodo, deleteNetworkTodo, updateNetworkTodo } from '../redux/todosReducer'
 
 
 function Todo({ todo }: { todo: incomingTodos }) {
@@ -42,8 +42,10 @@ export function IncomingTodos() {
     }
 
     const deletePayload = (): void => {
-        const result = deleteTodo(1)
-        result.then(res => console.log(res))
+        deleteTodo(1)
+        // Normally you'd check for the status code then update redux.
+        dispatch(deleteNetworkTodo(1))
+        // result.then(res => {dispatch(deleteNetworkTodo(res.userId))})
     }
 
     return (

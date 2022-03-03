@@ -24,6 +24,9 @@ export const todosSlice = createSlice({
             const filteredArray = state.value.filter((item) => item.id !== action.payload.id)
             filteredArray.unshift(action.payload)
             state.value = filteredArray
+        },
+        deleteNetworkTodo: (state, action: PayloadAction<number>) => {
+            state.value = state.value.filter((item) => item.id !== action.payload)
         }
         // addTodo: (state, action: PayloadAction<TodoInt>) => {
         //     state.value.push(action.payload)
@@ -43,7 +46,7 @@ export const todosSlice = createSlice({
     }
 })
 
-export const { addNetworkTodos, createNetworkTodo, updateNetworkTodo } = todosSlice.actions
+export const { addNetworkTodos, createNetworkTodo, updateNetworkTodo, deleteNetworkTodo } = todosSlice.actions
 // export const { addTodo, updateTodo, completeTodo, deleteTodo } = todosSlice.actions
 
 export default todosSlice.reducer
