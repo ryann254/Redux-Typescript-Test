@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getTodos, incomingTodos, patchTodos, postTodos, deleteTodo } from '../network/network'
+import { useAppDispatch, useAppSelector } from '../redux/hooks'
+import { addNetworkTodos } from '../redux/todosReducer'
 
 
 function Todo({ todo }: { todo: incomingTodos }) {
@@ -14,13 +16,15 @@ function Todo({ todo }: { todo: incomingTodos }) {
 }
 
 export function IncomingTodos() {
-    const [networkTodos, setNetworkTodos] = useState<incomingTodos[]>([])
+    // const [networkTodos, setNetworkTodos] = useState<incomingTodos[]>([])
+    const storedTodos = useAppSelector((state) => state.todos.value)
+    const dispatch = useAppDispatch()
     useEffect(() => {
-        if (!networkTodos.length) {
+        if (!storedTodos.length) {
             const result = getTodos()
-            result.then(res => setNetworkTodos(res))
+            result.then(res => dispatch(addNetworkTodos(res)))
         }
-    }, [networkTodos])
+    }, [storedTodos])
 
     const postPayload = () => {
         const payload = {
@@ -49,7 +53,7 @@ export function IncomingTodos() {
                 <button className='btn me-3 btn-warning' onClick={updatePayload}>Update Payload</button>
                 <button className='btn me-3 btn-danger' onClick={deletePayload}>Delete Payload</button>
             </div>
-            <div>{networkTodos.length ? networkTodos.map((todo, index) => (
+            <div>{storedTodos.length ? storedTodos.map((todo, index) => (
                 <Todo key={index} todo={todo} />
             )) : null}
             </div>

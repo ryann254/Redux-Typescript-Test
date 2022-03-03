@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
-import { addTodo, completeTodo, deleteTodo, updateTodo } from '../redux/todosReducer';
+// import { addTodo, completeTodo, deleteTodo, updateTodo } from '../redux/todosReducer';
 
 export interface ITodosProps {
 }
 
 export interface TodoInt {
     id: number,
-    content: string,
-    done: boolean
+    content?: string,
+    done?: boolean,
+    userId?: number,
 }
 
 interface UpdateInt {
@@ -43,12 +44,12 @@ export function Todos(props: ITodosProps) {
         if (update.isUpdate) {
             // Correct the todos id before submitting it.
             value.id = update.id
-            dispatch(updateTodo(value))
+            // dispatch(updateTodo(value))
             // Clean up.
             setUpdate({ isUpdate: false, id: 0 })
             setTodo({ id: 0, content: '', done: false })
         } else {
-            dispatch(addTodo(value))
+            // dispatch(addTodo(value))
             setTodoId(todoId + 1)
             setTodo({ id: 0, content: '', done: false })
         }
@@ -56,7 +57,7 @@ export function Todos(props: ITodosProps) {
 
     const handleDelete = (evt: React.MouseEvent, value: number) => {
         evt.preventDefault()
-        dispatch(deleteTodo(value))
+        // dispatch(deleteTodo(value))
     }
 
     const handleUpdate = (evt: React.MouseEvent, value: TodoInt) => {
@@ -74,7 +75,7 @@ export function Todos(props: ITodosProps) {
             ...value,
             done: true
         }
-        dispatch(completeTodo(completedTodo))
+        // dispatch(completeTodo(completedTodo))
     }
     return (
         <div className='col-6 mt-5 mx-auto'>
