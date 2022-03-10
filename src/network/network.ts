@@ -1,23 +1,21 @@
 export interface incomingTodos {
-    userId: number,
-    id: number,
-    title: string,
-    completed: boolean
+    _id: string,
+    content: string,
+    done: boolean
 }
 
 export interface Payload {
-    userId: number,
-    title: string,
-    body: string
+    content: string,
+    done: boolean
 }
 
 export interface UpdatePayload {
-    title?: string
-    body?: string
+    content?: string
+    done?: boolean
 }
 
 // Be mindful about the last slash.
-const url = 'https://jsonplaceholder.typicode.com/'
+const url = 'http://localhost:6061/'
 
 export const getTodos = async (): Promise<incomingTodos[]> => {
     const result = await fetch(`${url}todos`)
@@ -35,8 +33,8 @@ export const postTodos = async (payload: Payload): Promise<incomingTodos> => {
     return result.json()
 }
 
-export const patchTodos = async (payload: UpdatePayload): Promise<incomingTodos> => {
-    const result = await fetch(`${url}posts/1`, {
+export const patchTodos = async (payload: UpdatePayload, id: string): Promise<incomingTodos> => {
+    const result = await fetch(`${url}posts/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(payload),
         headers: {
@@ -46,7 +44,7 @@ export const patchTodos = async (payload: UpdatePayload): Promise<incomingTodos>
     return result.json()
 }
 
-export const deleteTodo = async (payload: number) => {
+export const deleteTodo = async (payload: string) => {
     const result = await fetch(`${url}posts/${payload}`, {
         method: "DELETE"
     })

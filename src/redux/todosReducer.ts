@@ -21,26 +21,26 @@ export const todosSlice = createSlice({
             state.value.unshift(action.payload)
         },
         updateNetworkTodo: (state, action: PayloadAction<incomingTodos>) => {
-            const filteredArray = state.value.filter((item) => item.id !== action.payload.id)
+            const filteredArray = state.value.filter((item) => item._id !== action.payload._id)
             filteredArray.unshift(action.payload)
             state.value = filteredArray
         },
-        deleteNetworkTodo: (state, action: PayloadAction<number>) => {
-            state.value = state.value.filter((item) => item.id !== action.payload)
+        deleteNetworkTodo: (state, action: PayloadAction<string>) => {
+            state.value = state.value.filter((item) => item._id !== action.payload)
         },
-        sortByOddNumbers: (state) => {
-            state.value = state.value.filter((item) => item.id % 2 > 0)
-        },
-        sortByEvenNumbers: (state) => {
-            state.value = state.value.filter((item) => item.id % 2 === 0)
-        },
+        // sortByOddNumbers: (state) => {
+        //     state.value = state.value.filter((item) => item._id % 2 > 0)
+        // },
+        // sortByEvenNumbers: (state) => {
+        //     state.value = state.value.filter((item) => item.id % 2 === 0)
+        // },
         sortAlphabetically: (state) => {
             state.value = state.value.sort(function (a, b) {
-                if (a.title < b.title) {
+                if (a.content < b.content) {
                     return -1
                 }
 
-                if (a.title > b.title) {
+                if (a.content > b.content) {
                     return 1
                 }
                 return 0
@@ -64,7 +64,7 @@ export const todosSlice = createSlice({
     }
 })
 
-export const { addNetworkTodos, createNetworkTodo, updateNetworkTodo, deleteNetworkTodo, sortByOddNumbers, sortByEvenNumbers, sortAlphabetically } = todosSlice.actions
+export const { addNetworkTodos, createNetworkTodo, updateNetworkTodo, deleteNetworkTodo, sortAlphabetically } = todosSlice.actions
 // export const { addTodo, updateTodo, completeTodo, deleteTodo } = todosSlice.actions
 
 export default todosSlice.reducer
