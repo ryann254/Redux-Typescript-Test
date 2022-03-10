@@ -1,9 +1,9 @@
-import { incomingTodos } from './../network/network';
+import { incomingTodo, incomingResponses } from './../network/network';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // import { TodoInt } from "../components/todos";
 
 interface todosInitialState {
-    value: incomingTodos[]
+    value: incomingTodo[]
 }
 
 const initialState: todosInitialState = {
@@ -14,13 +14,13 @@ export const todosSlice = createSlice({
     name: 'todosReducer',
     initialState,
     reducers: {
-        addNetworkTodos: (state, action: PayloadAction<incomingTodos[]>) => {
+        addNetworkTodos: (state, action: PayloadAction<incomingTodo[]>) => {
             state.value = action.payload
         },
-        createNetworkTodo: (state, action: PayloadAction<incomingTodos>) => {
+        createNetworkTodo: (state, action: PayloadAction<incomingTodo>) => {
             state.value.unshift(action.payload)
         },
-        updateNetworkTodo: (state, action: PayloadAction<incomingTodos>) => {
+        updateNetworkTodo: (state, action: PayloadAction<incomingTodo>) => {
             const filteredArray = state.value.filter((item) => item._id !== action.payload._id)
             filteredArray.unshift(action.payload)
             state.value = filteredArray
