@@ -9,8 +9,8 @@ function Todo({ todo, updatePayload, deletePayload }: { todo: incomingTodo, upda
         <ul className='mt-3'>
             <li>
                 <span className='me-2'>{todo.content}</span>
-                <button className='btn me-3 btn-warning' onClick={(e) => updatePayload(e, todo._id)}>Update Payload</button>
-                <button className='btn me-3 btn-danger' onClick={(e) => deletePayload(e, todo._id)}>Delete Payload</button>
+                <button className='btn me-3 btn-warning' onClick={() => updatePayload(todo._id)}>Update Todo</button>
+                <button className='btn me-3 btn-danger' onClick={() => deletePayload(todo._id)}>Delete Todo</button>
                 {todo.done ? null : <button type='button' className='btn btn-outline-primary me-2'>Done</button>}
             </li>
         </ul>

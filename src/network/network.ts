@@ -31,29 +31,29 @@ export const getTodos = async (): Promise<incomingResponses> => {
 }
 
 export const postTodos = async (payload: Payload): Promise<incomingResponse> => {
-    const result = await fetch(`${url}posts`, {
+    const result = await fetch(`${url}todos`, {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: {
-            'Content-type': 'application/json; charset=UTF-8',
+            'Content-type': 'application/json'
         }
     })
     return result.json()
 }
 
 export const patchTodos = async (payload: UpdatePayload, id: string): Promise<incomingResponse> => {
-    const result = await fetch(`${url}posts/${id}`, {
+    const result = await fetch(`${url}todos/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(payload),
         headers: {
-            'Content-type': 'application/json; charset=UTF-8',
+            'Content-type': 'application/json'
         }
     })
     return result.json()
 }
 
 export const deleteTodo = async (payload: string) => {
-    const result = await fetch(`${url}posts/${payload}`, {
+    const result = await fetch(`${url}todos/${payload}`, {
         method: "DELETE"
     })
     return result.json()
