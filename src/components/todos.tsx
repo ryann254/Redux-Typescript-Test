@@ -83,9 +83,9 @@ export function Todos(props: ITodosProps) {
                 <input type="text" value={todo.content} onChange={(e) => setTodo({ id: todoId, content: e.target.value, done: false })} />
                 <button type='submit' className='btn btn-primary'>Submit</button>
             </form>
-            {storedTodos.length ? storedTodos.map((todo, index) => (
+            {/* {storedTodos.length ? storedTodos.map((todo, index) => (
                 <Todo value={todo} key={index} handleDelete={handleDelete} handleUpdate={handleUpdate} handleComplete={handleComplete} />
-            )) : null}
+            )) : null} */}
         </div>
     );
 }
