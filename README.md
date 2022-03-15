@@ -3,7 +3,7 @@
 This is a learning project where I gradually add functionality to it. The project is first created with just React then I add typescript, redux and finally I connect it to a live backend. This is meant to be like a real world representation of how to add typescript to a project all while doing all the normal thing you would do in a project.
 
 To move back to the point when redux is first added or to any point you want, use the following commands:
-First clone the project using  `git clone https://github.com/ryann254/Redux-Typescript-Test.git` then run `yarn install` in your terminal. This should install all the needed dependencies.
+First clone the project using  `git clone https://github.com/ryann254/Redux-Typescript-Test.git`, cd into the cloned project then run `yarn install` in your terminal. This should install all the needed dependencies.
 
 Now, let's say you want to move the exact point where I added redux to the project. You first need to run the `git log --oneline` to see all the commits and then choose the commit with the title `feat: Added redux store with typescript...`. Copy the commit hash next to it and run `git checkout 'paste the commit hash'` to visit that commit.
 
