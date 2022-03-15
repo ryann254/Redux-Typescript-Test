@@ -11,6 +11,8 @@ You can make as many changes as you want and play around with code. When you're 
 
 Alternative, you can install an extension called `git lens` in your vscode which allows you to see all the commits in a project.
 
+This project is meant to use the `Simple-Rest-Api-Nodejs-Express-Mongodb` repository as its backend.
+
 
 ## Available Scripts
 
