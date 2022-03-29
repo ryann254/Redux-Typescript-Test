@@ -4,16 +4,15 @@ import { Todos } from './components/todos';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { store } from './redux/store';
-import { IncomingTodos } from './components/incomingTodos';
+import Routes from './routes';
 
 function App() {
   return (
-    <div>
+    <>
       <Provider store={store}>
-        {/* <Todos /> */}
-        <IncomingTodos />
+        <Routes />
       </Provider>
-    </div>
+    </>
   );
 }
 
