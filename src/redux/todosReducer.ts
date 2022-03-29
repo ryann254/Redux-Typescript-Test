@@ -1,4 +1,4 @@
-import { incomingTodo, incomingResponses } from './../network/network';
+import { incomingTodo } from './../network/network';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // import { TodoInt } from "../components/todos";
 
