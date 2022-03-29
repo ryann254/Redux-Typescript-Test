@@ -1,9 +1,11 @@
+import { albumSalesSlice } from './albumSalesReducer';
 import { todosSlice } from './todosReducer';
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
     reducer: {
-        todos: todosSlice.reducer
+        todos: todosSlice.reducer,
+        albumSales: albumSalesSlice.reducer
     }
 })
 
