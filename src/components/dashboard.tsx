@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import Chart from 'react-apexcharts'
 import { Link } from 'react-router-dom'
 import { getArtistUUID, getOctoberMonthlyListeners, monthlyListenersResponse, UUIDResponse } from '../network/network'
-import { addArtistDetails, addMonthlyListenersAndIncome } from '../redux/albumSalesReducer'
+import { addArtistDetails, addCityNames, addListenersByCity, addMonthlyListenersAndIncome } from '../redux/albumSalesReducer'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
 
 type Props = {}
@@ -10,9 +10,22 @@ type Props = {}
 
 
 export default function Dashboard(props: Props) {
-    const storeAlbumSales = useAppSelector((state) => state.albumSales.value)
+    const listenersByCity = useAppSelector((state) => state.albumSales.listeners)
+    const cityNames = useAppSelector((state) => state.albumSales.cityNames)
     const artistDetails = useAppSelector((state) => state.albumSales.artistDetails)
     const dispatch = useAppDispatch()
+
+    const getListenersByCity = (data: Record<string, any>[]) => {
+        const firstTwelveCities = data.slice(0, 11)
+        let cityNames: string[] = []
+        let listeners: number[] = []
+        firstTwelveCities.map(city => {
+            cityNames.push(city.cityName)
+            listeners.push(city.value)
+        })
+        dispatch(addCityNames(cityNames))
+        dispatch(addListenersByCity(listeners))
+    }
 
     const extractResponse = (response: Promise<UUIDResponse> | Promise<monthlyListenersResponse>, type: string) => {
         response.then(res => {
@@ -31,6 +44,7 @@ export default function Dashboard(props: Props) {
                         dispatch(addArtistDetails(items[0]))
                     } else {
                         dispatch(addMonthlyListenersAndIncome(items[0].value))
+                        getListenersByCity(items[0].cityPlots)
                     }
                 }
             }
@@ -85,17 +99,13 @@ export default function Dashboard(props: Props) {
                 }
             },
             xaxis: {
-                categories: [1996, 1999, 2000, 2002, 2004, 2009, 2010, 2013, 2017, 2018, 2020]
+                categories: cityNames
             }
         },
         series: [
             {
                 name: "Eminem's Album Sales",
-                data: storeAlbumSales
-            },
-            {
-                name: "Eminem's Album Sales",
-                data: storeAlbumSales
+                data: listenersByCity
             },
         ]
     }
