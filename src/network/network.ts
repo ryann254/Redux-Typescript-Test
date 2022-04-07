@@ -22,11 +22,17 @@ export interface UpdatePayload {
     done?: boolean
 }
 
+export interface UUIDResponse {
+    errors: any[],
+    items?: Record<string, any>[],
+    page: Record<string, any>
+}
+
 // Be mindful about the last slash.
 const url = 'https://grocery-list-backend-001.herokuapp.com/'
 const dashboardURL = 'https://sandbox.api.soundcharts.com/api/v2/artist/'
 
-export const getArtistUUID = async (name: string) => {
+export const getArtistUUID = async (name: string): Promise<UUIDResponse> => {
     const result = await fetch(`${dashboardURL}search/${name}?offset=0&limit=20`, {
         method: 'GET',
         headers: {

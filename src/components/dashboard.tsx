@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import Chart from 'react-apexcharts'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getArtistUUID, getOctoberMonthlyListeners } from '../network/network'
+import { addArtistDetails } from '../redux/albumSalesReducer'
 import { useAppSelector } from '../redux/hooks'
 
 type Props = {}
@@ -10,9 +12,24 @@ type Props = {}
 
 export default function Dashboard(props: Props) {
     const storeAlbumSales = useAppSelector((state) => state.albumSales.value)
+    const dispatch = useDispatch()
     useEffect(() => {
         const uuid = getArtistUUID('billie eillish')
-        uuid.then(res => console.log(res));
+        uuid.then(res => {
+            // If the api request returns only one item in the object then an error
+            // occured.
+            const { errors } = res
+            if (Object.keys(res).length === 1) {
+                console.log(errors[0].message)
+            } else if (Object.keys(res).length > 1) {
+                const { items } = res
+                // Because the items array is possibly undefined we have first check
+                // if it's there before dispatching it to the store.
+                if (items) {
+                    dispatch(addArtistDetails(items[0]))
+                }
+            }
+        });
         // getOctoberMonthlyListeners(uuid)
     }, [])
     const chartData = {
