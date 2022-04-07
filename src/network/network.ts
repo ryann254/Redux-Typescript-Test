@@ -25,7 +25,14 @@ export interface UpdatePayload {
 export interface UUIDResponse {
     errors: any[],
     items?: Record<string, any>[],
-    page: Record<string, any>
+    page?: Record<string, any>
+}
+
+export interface monthlyListenersResponse {
+    errors: any[],
+    items?: Record<string, any>[],
+    page?: Record<string, any>,
+    related?: Record<string, any>
 }
 
 // Be mindful about the last slash.
@@ -43,8 +50,17 @@ export const getArtistUUID = async (name: string): Promise<UUIDResponse> => {
     return result.json()
 }
 
-export const getOctoberMonthlyListeners = async (uuid: string) => {
-    // const result = await fetch(`${dashboardURL}/search/${}`)
+export const getOctoberMonthlyListeners = async (uuid: string): Promise<monthlyListenersResponse> => {
+    const year = '2020'
+    const month = '10'
+    const result = await fetch(`${dashboardURL}${uuid}/streaming/spotify/listeners/${year}/${month}`, {
+        method: 'GET',
+        headers: {
+            'x-app-id': 'soundcharts',
+            'x-api-key': 'soundcharts',
+        }
+    })
+    return result.json()
 }
 
 export const getTodos = async (): Promise<incomingResponses> => {
