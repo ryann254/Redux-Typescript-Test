@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import { useEffect } from 'react'
-import Chart from 'react-apexcharts'
 import { Link } from 'react-router-dom'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -134,29 +133,7 @@ export default function Dashboard(props: Props) {
             </Link>
             <Grid container spacing={3} direction='row'>
                 <Grid item xs={12} md={8}>
-                    <Card sx={{
-                        border: '1px solid',
-                        borderColor: 'rgba(144, 202, 249, 0.46)',
-                        ':hover': {
-                            boxShadow: '0 2px 14px 0 rgb(32 40 45 / 8%)'
-                        },
-                    }}>
-                        <CardContent>
-                            <Grid container spacing={3}>
-                                <Grid item xs={12} alignItems="center" spacing={1}>
-                                    <Grid container direction="column" spacing={1}>
-                                        <Grid item>
-                                            <Typography variant="subtitle2">Listeners in Different cities</Typography>
-                                        </Grid>
-                                        <Grid item>
-                                            <Typography variant="h5">City with the most streams: Mexico</Typography>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                            <Chart options={chartData.options} height={chartData.height} series={chartData.series} type='bar' width={chartData.width} />
-                        </CardContent>
-                    </Card>
+
                 </Grid>
                 <Grid item xs={12} md={4}>
                     <Card>
