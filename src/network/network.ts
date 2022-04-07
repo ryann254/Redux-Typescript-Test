@@ -23,7 +23,23 @@ export interface UpdatePayload {
 }
 
 // Be mindful about the last slash.
-const url = 'http://localhost:6061/'
+const url = 'https://grocery-list-backend-001.herokuapp.com/'
+const dashboardURL = 'https://sandbox.api.soundcharts.com/api/v2/artist/'
+
+export const getArtistUUID = async (name: string) => {
+    const result = await fetch(`${dashboardURL}search/${name}?offset=0&limit=20`, {
+        method: 'GET',
+        headers: {
+            'x-app-id': 'soundcharts',
+            'x-api-key': 'soundcharts',
+        }
+    })
+    return result.json()
+}
+
+export const getOctoberMonthlyListeners = async (uuid: string) => {
+    // const result = await fetch(`${dashboardURL}/search/${}`)
+}
 
 export const getTodos = async (): Promise<incomingResponses> => {
     const result = await fetch(`${url}todos`)
