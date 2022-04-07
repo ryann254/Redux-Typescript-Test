@@ -1,8 +1,14 @@
+import styled from '@emotion/styled'
 import { useEffect } from 'react'
 import Chart from 'react-apexcharts'
 import { Link } from 'react-router-dom'
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
 import { getArtistUUID, getOctoberMonthlyListeners, monthlyListenersResponse, UUIDResponse } from '../network/network'
-import { addArtistDetails, addCityNames, addListenersByCity, addMonthlyListenersAndIncome } from '../redux/albumSalesReducer'
+import { addApiCalls, addArtistDetails, addCityNames, addListenersByCity, addMonthlyListenersAndIncome, resetApiCalls } from '../redux/albumSalesReducer'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
 
 type Props = {}
@@ -13,6 +19,7 @@ export default function Dashboard(props: Props) {
     const listenersByCity = useAppSelector((state) => state.albumSales.listeners)
     const cityNames = useAppSelector((state) => state.albumSales.cityNames)
     const artistDetails = useAppSelector((state) => state.albumSales.artistDetails)
+    const apiCalls = useAppSelector((state) => state.albumSales.apiCalls)
     const dispatch = useAppDispatch()
 
     const getListenersByCity = (data: Record<string, any>[]) => {
@@ -22,6 +29,7 @@ export default function Dashboard(props: Props) {
         firstTwelveCities.map(city => {
             cityNames.push(city.cityName)
             listeners.push(city.value)
+            return null
         })
         dispatch(addCityNames(cityNames))
         dispatch(addListenersByCity(listeners))
@@ -42,8 +50,11 @@ export default function Dashboard(props: Props) {
                 if (items) {
                     if (type === 'uuid') {
                         dispatch(addArtistDetails(items[0]))
+                        dispatch(resetApiCalls())
                     } else {
                         dispatch(addMonthlyListenersAndIncome(items[0].value))
+                        dispatch(resetApiCalls())
+
                         getListenersByCity(items[0].cityPlots)
                     }
                 }
@@ -52,12 +63,13 @@ export default function Dashboard(props: Props) {
     }
 
     useEffect(() => {
-        if (!Object.keys(artistDetails).length) {
+        dispatch(addApiCalls())
+        if (!Object.keys(artistDetails).length && apiCalls < 3) {
             const uuidResponse = getArtistUUID('billie eillish')
             extractResponse(uuidResponse, 'uuid')
         }
 
-        if (artistDetails.uuid) {
+        if (artistDetails.uuid && apiCalls < 3) {
             const listenerResults = getOctoberMonthlyListeners(artistDetails.uuid)
             extractResponse(listenerResults, 'listeners')
         }
@@ -71,7 +83,7 @@ export default function Dashboard(props: Props) {
                 id: "basic-bar",
                 stacked: true,
                 toolbar: {
-                    show: true
+                    show: false
                 },
                 zoom: {
                     enabled: false
@@ -86,8 +98,14 @@ export default function Dashboard(props: Props) {
                             offsetX: -20,
                             offsetY: 0
                         },
+                        fill: {
+                            type: 'solid'
+                        },
                         dataLabels: {
                             enabled: false
+                        },
+                        grid: {
+                            show: true
                         }
                     }
                 }
@@ -106,15 +124,53 @@ export default function Dashboard(props: Props) {
             {
                 name: "Eminem's Album Sales",
                 data: listenersByCity
-            },
+            }
         ]
     }
     return (
-        <>
+        <Container>
             <Link to='/'>
                 <button className='btn me-3 btn-primary mb-4'>Move back Home</button>
             </Link>
-            <Chart options={chartData.options} height={chartData.height} series={chartData.series} type='bar' width={chartData.width} />
-        </>
+            <Grid container spacing={3} direction='row'>
+                <Grid item xs={12} md={8}>
+                    <Card sx={{
+                        border: '1px solid',
+                        borderColor: 'rgba(144, 202, 249, 0.46)',
+                        ':hover': {
+                            boxShadow: '0 2px 14px 0 rgb(32 40 45 / 8%)'
+                        },
+                    }}>
+                        <CardContent>
+                            <Grid container spacing={3}>
+                                <Grid item xs={12} alignItems="center" spacing={1}>
+                                    <Grid container direction="column" spacing={1}>
+                                        <Grid item>
+                                            <Typography variant="subtitle2">Listeners in Different cities</Typography>
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography variant="h5">City with the most streams: Mexico</Typography>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Chart options={chartData.options} height={chartData.height} series={chartData.series} type='bar' width={chartData.width} />
+                        </CardContent>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                    <Card>
+                        <CardContent>Popular chart</CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
+
+        </Container>
     )
 }
+
+const Container = styled.div`
+    background: #e3f2fd;
+    height: 100vh;
+    color: rgb(97, 97, 97);
+`
