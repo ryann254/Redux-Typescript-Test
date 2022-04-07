@@ -2,7 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface todosInitialState {
     value: number[],
-    artistDetails: Record<string, string>
+    artistDetails: Record<string, string>,
+    totalMonthlyListeners: number,
+    totalIncome: number,
+    pricePerStream: number
 }
 
 const initialState: todosInitialState = {
@@ -19,7 +22,10 @@ const initialState: todosInitialState = {
         493000,
         1100000,
     ],
-    artistDetails: {}
+    artistDetails: {},
+    totalMonthlyListeners: 0,
+    totalIncome: 0,
+    pricePerStream: 0.005
 }
 
 export const albumSalesSlice = createSlice({
@@ -29,10 +35,14 @@ export const albumSalesSlice = createSlice({
         addArtistDetails: (state, action: PayloadAction<Record<string, string>>) => {
             state.artistDetails = action.payload
         },
+        addMonthlyListenersAndIncome: (state, action: PayloadAction<number>) => {
+            state.totalMonthlyListeners = action.payload
+            state.totalIncome = (action.payload * state.pricePerStream)
+        },
     }
 })
 
-export const { addArtistDetails } = albumSalesSlice.actions
+export const { addArtistDetails, addMonthlyListenersAndIncome } = albumSalesSlice.actions
 // export const { addTodo, updateTodo, completeTodo, deleteTodo } = todosSlice.actions
 
 export default albumSalesSlice.reducer

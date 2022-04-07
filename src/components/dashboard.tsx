@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import Chart from 'react-apexcharts'
 import { Link } from 'react-router-dom'
 import { getArtistUUID, getOctoberMonthlyListeners, monthlyListenersResponse, UUIDResponse } from '../network/network'
-import { addArtistDetails } from '../redux/albumSalesReducer'
+import { addArtistDetails, addMonthlyListenersAndIncome } from '../redux/albumSalesReducer'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
 
 type Props = {}
@@ -11,7 +11,7 @@ type Props = {}
 
 export default function Dashboard(props: Props) {
     const storeAlbumSales = useAppSelector((state) => state.albumSales.value)
-    const { uuid } = useAppSelector((state) => state.albumSales.artistDetails)
+    const artistDetails = useAppSelector((state) => state.albumSales.artistDetails)
     const dispatch = useAppDispatch()
 
     const extractResponse = (response: Promise<UUIDResponse> | Promise<monthlyListenersResponse>, type: string) => {
@@ -30,7 +30,7 @@ export default function Dashboard(props: Props) {
                     if (type === 'uuid') {
                         dispatch(addArtistDetails(items[0]))
                     } else {
-                        return ''
+                        dispatch(addMonthlyListenersAndIncome(items[0].value))
                     }
                 }
             }
@@ -38,14 +38,16 @@ export default function Dashboard(props: Props) {
     }
 
     useEffect(() => {
-        const uuidResponse = getArtistUUID('billie eillish')
-        extractResponse(uuidResponse, 'uuid')
+        if (!Object.keys(artistDetails).length) {
+            const uuidResponse = getArtistUUID('billie eillish')
+            extractResponse(uuidResponse, 'uuid')
+        }
 
-        if (uuid) {
-            const listenerResults = getOctoberMonthlyListeners(uuid)
+        if (artistDetails.uuid) {
+            const listenerResults = getOctoberMonthlyListeners(artistDetails.uuid)
             extractResponse(listenerResults, 'listeners')
         }
-    }, [])
+    }, [artistDetails])
     const chartData = {
         height: 500,
         width: 500,
