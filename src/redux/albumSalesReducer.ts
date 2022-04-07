@@ -6,7 +6,8 @@ interface todosInitialState {
     artistDetails: Record<string, string>,
     totalMonthlyListeners: number,
     totalIncome: number,
-    pricePerStream: number
+    pricePerStream: number,
+    apiCalls: number
 }
 
 const initialState: todosInitialState = {
@@ -15,7 +16,8 @@ const initialState: todosInitialState = {
     artistDetails: {},
     totalMonthlyListeners: 0,
     totalIncome: 0,
-    pricePerStream: 0.005
+    pricePerStream: 0.005,
+    apiCalls: 0
 }
 
 export const albumSalesSlice = createSlice({
@@ -34,11 +36,17 @@ export const albumSalesSlice = createSlice({
         },
         addListenersByCity: (state, action: PayloadAction<number[]>) => {
             state.listeners = action.payload
+        },
+        addApiCalls: (state) => {
+            state.apiCalls += 1
+        },
+        resetApiCalls: (state) => {
+            state.apiCalls = 0
         }
     }
 })
 
-export const { addArtistDetails, addMonthlyListenersAndIncome, addCityNames, addListenersByCity } = albumSalesSlice.actions
+export const { addArtistDetails, addMonthlyListenersAndIncome, addCityNames, addListenersByCity, addApiCalls, resetApiCalls } = albumSalesSlice.actions
 // export const { addTodo, updateTodo, completeTodo, deleteTodo } = todosSlice.actions
 
 export default albumSalesSlice.reducer
