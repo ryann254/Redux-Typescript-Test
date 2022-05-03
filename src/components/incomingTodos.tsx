@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { getTodos, incomingTodo, patchTodos, postTodos, deleteTodo } from '../network/network'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
 import { addNetworkTodos, createNetworkTodo, deleteNetworkTodo, sortAlphabetically, updateNetworkTodo } from '../redux/todosReducer'
@@ -65,11 +66,15 @@ export function IncomingTodos() {
                 <div className='mt-3'>
                     <button className='btn me-3 btn-success' onClick={() => sortTodos('alphabet')}>Sort: Alphabetically</button>
                     <button className='btn me-3 btn-danger' onClick={() => sortTodos('')}>Reset</button>
+                    <Link to='/dashboard'>
+                        <button className='btn me-3 btn-primary'>Move to Dashboard</button>
+                    </Link>
+
                 </div>
             </div>
             <div>{storedTodos.length ? storedTodos.map((todo, index) => (
                 <Todo key={index} todo={todo} updatePayload={updatePayload} deletePayload={deletePayload} />
-            )) : null}
+            )) : 'Loading...'}
             </div>
         </>
     )
