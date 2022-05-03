@@ -47,6 +47,5 @@ export const albumSalesSlice = createSlice({
 })
 
 export const { addArtistDetails, addMonthlyListenersAndIncome, addCityNames, addListenersByCity, addApiCalls, resetApiCalls } = albumSalesSlice.actions
-// export const { addTodo, updateTodo, completeTodo, deleteTodo } = todosSlice.actions
 
 export default albumSalesSlice.reducer

@@ -10,7 +10,7 @@ type Props = {
         height: number,
         width: number,
         options: Record<string, any>,
-        options: Record<string, any>[]
+        series: any
     }
 }
 
@@ -26,14 +26,8 @@ export default function CityListenersChart({ chartData }: Props) {
             <CardContent>
                 <Grid container spacing={3}>
                     <Grid item xs={12} alignItems="center" spacing={1}>
-                        <Grid container direction="column" spacing={1}>
-                            <Grid item>
-                                <Typography variant="subtitle2">Listeners in Different cities</Typography>
-                            </Grid>
-                            <Grid item>
-                                <Typography variant="h5">City with the most streams: Mexico</Typography>
-                            </Grid>
-                        </Grid>
+                        <Typography variant="subtitle2">Listeners in Different cities</Typography>
+                        <Typography variant="h5">City with the most streams: Mexico</Typography>
                     </Grid>
                 </Grid>
                 <Chart options={chartData.options} height={chartData.height} series={chartData.series} type='bar' width={chartData.width} />

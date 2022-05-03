@@ -64,12 +64,12 @@ export const getOctoberMonthlyListeners = async (uuid: string): Promise<monthlyL
 }
 
 export const getTodos = async (): Promise<incomingResponses> => {
-    const result = await fetch(`${url}todos`)
+    const result = await fetch(`${url}items`)
     return result.json()
 }
 
 export const postTodos = async (payload: Payload): Promise<incomingResponse> => {
-    const result = await fetch(`${url}todos`, {
+    const result = await fetch(`${url}items`, {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: {
@@ -80,7 +80,7 @@ export const postTodos = async (payload: Payload): Promise<incomingResponse> => 
 }
 
 export const patchTodos = async (payload: UpdatePayload, id: string): Promise<incomingResponse> => {
-    const result = await fetch(`${url}todos/${id}`, {
+    const result = await fetch(`${url}items/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(payload),
         headers: {
@@ -91,7 +91,7 @@ export const patchTodos = async (payload: UpdatePayload, id: string): Promise<in
 }
 
 export const deleteTodo = async (payload: string) => {
-    const result = await fetch(`${url}todos/${payload}`, {
+    const result = await fetch(`${url}items/${payload}`, {
         method: "DELETE"
     })
     return result.json()
