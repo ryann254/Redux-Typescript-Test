@@ -1,4 +1,4 @@
-# Todo App With Redux and Typescript
+# Web App With Redux and Typescript
 
 This is a learning project where I gradually add functionality to it. The project is first created with just React then I add typescript, redux and finally I connect it to a live backend. This is meant to be like a real world representation of how to add typescript to a project all while doing all the normal thing you would do in a project.
 
